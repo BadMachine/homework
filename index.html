@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+	    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+   <title>Hello World!</title>
+  </head>
+  <body>
+	<script>
+	 window.onload = ()=>{
+	 console.log('test');
+	 const button = document.getElementById("GET_BUTTON");
+	 const cardContent = document.getElementById("card");
+	 button.addEventListener("click", e => getDataFromServer(e));
+	 function getDataFromServer(e){
+		//e.preventDefault();
+		const serverUrl = 'http://localhost';
+		const serverPort = 8882;
+		fetch(`${serverUrl}:${serverPort}/`)
+		.then((response) => {
+		return response.json();
+		})
+		.catch((error)=>{
+			cardContent.innerText = `${error}`;
+		})
+		.then((response)=> {
+		cardContent.innerHTML = `
+			<ul style='list-style-type:none;'>
+			<li>${response.name}</li>
+			<li>${response.secondname}</li>
+			<li>${response.date}</li>
+			<li>${response.server}</li>
+			</ul>
+		`;
+		})
+}
+	 }
+	</script>
+
+<p>
+  <button style='min-width: 100px; margin: 50vh 40vw auto 40vw;' class="btn btn-primary" id="GET_BUTTON" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+   Get data
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body" id='card'>
+
+  </div>
+</div>
+  </body>
+</html>
